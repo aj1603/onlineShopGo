@@ -1,0 +1,19 @@
+Online shoping:
+
+//alternative export GOPORXY=https://gocenter.io
+
+
+Category api:
+
+GET localhost:8090/category/all    //for all category data
+POST localhost:8090/category/create    //for create category
+{
+	"name":"something"
+}
+PUT localhost:8090/category/update    //for update category
+{
+	"id": 1,
+	"name":"something"
+}
+DELETE localhost:8090/category/remove/:id    //for delete category
+

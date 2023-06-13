@@ -1,0 +1,55 @@
+package src
+
+import (
+	"io"
+	"onlineshopgo/config"
+	"onlineshopgo/src/api/brands"
+	"onlineshopgo/src/api/category"
+	"onlineshopgo/src/api/customer"
+	"onlineshopgo/src/api/product"
+	"onlineshopgo/src/api/users"
+	"onlineshopgo/src/tools"
+	"os"
+
+	"github.com/gin-gonic/gin"
+)
+
+func Init_app() *gin.Engine {
+	set_mode(config.ENV.GIN_MODE)
+	router := gin.New()
+	router.Use(gin.Logger())
+	router.SetTrustedProxies(nil)
+	router.Use(tools.Cors)
+	set_routers(router)
+	return router
+}
+
+func set_mode(mode string) {
+	switch mode {
+	case "debug":
+		gin.SetMode(gin.DebugMode)
+	case "release":
+		gin.SetMode(gin.ReleaseMode)
+		gin.DisableConsoleColor()
+		file, _ := os.Create("gin.log")
+		gin.DefaultWriter = io.MultiWriter(file)
+	}
+
+}
+
+func set_routers(router *gin.Engine) {
+	create_router(router, "product", product.Controller)
+	create_router(router, "category", category.Controller)
+	create_router(router, "customer", customer.Controller)
+	create_router(router, "brands", brands.Controller)
+	create_router(router, "users", users.Controller)
+}
+
+func create_router(
+	router *gin.Engine,
+	name string,
+	controller func(router *gin.RouterGroup),
+) {
+	group_name := router.Group(name)
+	controller(group_name)
+}
