@@ -1,23 +1,28 @@
 Online shoping:
 
+.env file example
+///
 PORT = 0000
 DB_URI = postgres://username:password@localhost:5432/database_name
 HOST = 0.0.0.0
 GIN_MODE = debug
 SECRET_KEY = same_magic_word
-
+///
 
 Category api:
-
+///
 GET localhost:8090/category/all    //for all category data
+
 POST localhost:8090/category/create    //for create category
 {
 	"name":"something"
 }
+
 PUT localhost:8090/category/update    //for update category
 {
 	"id": 1,
 	"name":"something"
 }
-DELETE localhost:8090/category/remove/:id    //for delete category
 
+DELETE localhost:8090/category/remove/:id    //for delete category
+///
