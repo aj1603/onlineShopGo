@@ -6,8 +6,6 @@ HOST = 0.0.0.0
 GIN_MODE = debug
 SECRET_KEY = same_magic_word
 
-//alternative export GOPORXY=https://gocenter.io
-
 
 Category api:
 
