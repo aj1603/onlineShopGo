@@ -11,8 +11,6 @@ import (
 
 func main() {
 	qr.GenQR()
-	filenameW := "qrcode2.png"
-	qr.ScanQRCode(filenameW)
 	config.Init_config()
 	db.Init_db()
 	tools.Init_queries()
