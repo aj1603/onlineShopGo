@@ -11,3 +11,9 @@ type Product struct {
 	DISCOUNT_ID int     `json:"discounts_id"`
 	BRAND_ID    int     `json:"brands_id"`
 }
+
+type Product_images struct {
+	ID         int    `json:"id"`
+	IMG_URL    string `json:"img_url"`
+	PRODUCT_ID int    `json:"products_id"`
+}
