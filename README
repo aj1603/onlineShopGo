@@ -1,5 +1,11 @@
 Online shoping:
 
+PORT = 0000
+DB_URI = postgres://username:password@localhost:5432/database_name
+HOST = 0.0.0.0
+GIN_MODE = debug
+SECRET_KEY = same_magic_word
+
 //alternative export GOPORXY=https://gocenter.io
 
 
