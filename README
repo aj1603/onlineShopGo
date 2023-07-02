@@ -26,3 +26,39 @@ PUT localhost:8090/category/update    //for update category
 
 DELETE localhost:8090/category/remove/:id    //for delete category
 ///
+
+Product api:
+///
+GET localhost:8090/product/all    //for all product data
+
+POST localhost:8090/product/create    //for create product
+{
+    "name": "something",
+    "description": "something",
+    "price": 0.0,
+    "product_sku": "something",
+    "quantity": 0,
+    "categories_id": 1,
+    "brands_id": 1,
+    "discounts_id": 1
+}
+
+PUT localhost:8090/product/update    //for update product
+{
+	"id": 1,
+	"name": "something",
+    "description": "something",
+    "price": 0.0,
+    "product_sku": "something",
+    "quantity": 0,
+    "categories_id": 1,
+    "brands_id": 1,
+    "discounts_id": 1
+}
+
+DELETE localhost:8090/product/remove/:id    //for delete product
+
+GET localhost:8090/product/get-by-id/:id    //for single product data
+
+GET localhost:8090/product/get-by-category-id/:id    //for single category data
+///
