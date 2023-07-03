@@ -2,6 +2,7 @@ package product
 
 import (
 	"encoding/json"
+	"fmt"
 	req "onlineshopgo/src/api/product/schemas"
 	"strconv"
 
@@ -50,6 +51,7 @@ func update(ctx *gin.Context) {
 func remove(ctx *gin.Context) {
 	id := ctx.Param("id")
 	int_id, _ := strconv.Atoi(id)
+	fmt.Println(int_id)
 
 	remove_(int_id)
 
@@ -59,6 +61,7 @@ func remove(ctx *gin.Context) {
 func get_by_id(ctx *gin.Context) {
 	id := ctx.Param("id")
 	int_id, _ := strconv.Atoi(id)
+	fmt.Println(int_id)
 
 	res := get_by_id_(int_id)
 
@@ -70,6 +73,15 @@ func get_by_category_id(ctx *gin.Context) {
 	int_id, _ := strconv.Atoi(id)
 
 	res, _ := get_by_category_id_(int_id)
+
+	ctx.JSON(200, res)
+}
+
+func search(ctx *gin.Context) {
+	var search req.Search
+	search.SEARCH = ctx.Param("search")
+
+	res, _ := search_from_word_(search.SEARCH)
 
 	ctx.JSON(200, res)
 }

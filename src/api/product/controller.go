@@ -13,4 +13,5 @@ func Controller(router *gin.RouterGroup) {
 	router.DELETE("/remove/:id", req.Validate_delete, remove)
 	router.GET("/get-by-id/:id", get_by_id)
 	router.GET("/get-by-category-id/:id", get_by_category_id)
+	router.GET("/search/:search", req.Validate_search, search)
 }

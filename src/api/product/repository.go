@@ -148,3 +148,52 @@ func get_by_category_id_(categories_id int) ([]res.Product, error) {
 	}
 	return products, nil
 }
+
+func search_from_word_(search_word string) ([]res.Product, error) {
+	var products []res.Product
+	fmt.Println(search_word)
+
+	rows, err := db.DB.Query(
+		context.Background(),
+		`SELECT 
+			products.id,
+			products.name,
+			products.description,
+			products.price,
+			products.product_sku,
+			products.quantity,
+			products.categories_id,
+			products.discounts_id,
+			products.brands_id
+		FROM products WHERE name LIKE ('`+search_word+`%')`,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var product res.Product
+
+		err := rows.Scan(
+			&product.ID,
+			&product.NAME,
+			&product.DESCRIPTION,
+			&product.PRICE,
+			&product.PRODUCT_SKU,
+			&product.QUANTITY,
+			&product.CATEGORY_ID,
+			&product.DISCOUNT_ID,
+			&product.BRAND_ID,
+		)
+
+		if err != nil {
+			return nil, err
+		}
+		products = append(products, product)
+	}
+
+	return products, nil
+}
