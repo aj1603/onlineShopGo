@@ -19,6 +19,7 @@ func Init_app() *gin.Engine {
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.SetTrustedProxies(nil)
+	router.Static("/public", config.ENV.DIR)
 	router.Use(tools.Cors)
 	set_routers(router)
 	return router

@@ -25,8 +25,8 @@ VALUES
 
 INSERT INTO brands ("name", img_url)
 VALUES
-    ('Coco_cola', '/public/products/1.png'),
-    ('Salam', '/public/products/2.png');
+    ('Coco_cola', '/public/products/1.jpg'),
+    ('Salam', '/public/products/2.jpg');
 
 INSERT INTO products ("name", "description", price, product_sku, quantity, categories_id, discounts_id, brands_id)
 VALUES
@@ -63,5 +63,6 @@ VALUES
 
 INSERT INTO products_images (img_url, products_id)
 VALUES
-    ('/public/products/3.png', 1),
-    ('/public/products/4.png', 2);
+    ('http://192.168.0.114:8091/public/products/3.jpg', 1),
+    ('http://192.168.0.114:8091/public/products/4.jpg', 2),
+    ('http://192.168.0.114:8091/public/products/2.jpg', 3);

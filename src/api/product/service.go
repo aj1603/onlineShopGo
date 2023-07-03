@@ -9,7 +9,7 @@ import (
 )
 
 func get(ctx *gin.Context) {
-	limit := ctx.DefaultQuery("limit", "2")
+	limit := ctx.DefaultQuery("limit", "5")
 	intLimit, _ := strconv.Atoi(limit)
 	offset := ctx.DefaultQuery("offset", "0")
 	intOffset, _ := strconv.Atoi(offset)
