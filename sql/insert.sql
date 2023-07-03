@@ -30,9 +30,10 @@ VALUES
 
 INSERT INTO products ("name", "description", price, product_sku, quantity, categories_id, discounts_id, brands_id)
 VALUES
-    ('Arduino', 'In beti', 140.0, '0321654', 150, 1, 1, 1),
-    ('Arduino_sensor', 'In beti', 14.0, '0321655', 20, 1, 1, 1),
-    ('gas sensor', 'In beti', 40.0, '0321656', 10, 1, 1, 1);
+    ('Arduino', 'Orginal made in italy', 378.0, '0321654', 150, 1, 1, 1),
+    ('Arduino LCD display', 'LCD display', 99.0, '0321655', 20, 1, 1, 1),
+    ('Lion battery charger', 'DC plug charger', 441.0, '0321656', 25, 1, 1, 1),
+    ('ESP-8266 WiFi module', 'WiFi module', 140.0, '0321657', 10, 1, 1, 1);
 
 INSERT INTO order_status ("status")
 VALUES
@@ -63,6 +64,7 @@ VALUES
 
 INSERT INTO products_images (img_url, products_id)
 VALUES
-    ('http://192.168.0.114:8091/public/products/3.jpg', 1),
+    ('http://192.168.0.114:8091/public/products/2.jpg', 1),
     ('http://192.168.0.114:8091/public/products/4.jpg', 2),
-    ('http://192.168.0.114:8091/public/products/2.jpg', 3);
+    ('http://192.168.0.114:8091/public/products/3.jpg', 3),
+    ('http://192.168.0.114:8091/public/products/1.jpg', 4);
