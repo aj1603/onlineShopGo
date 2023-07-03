@@ -8,8 +8,8 @@ import (
 	res "onlineshopgo/src/api/users/schemas"
 )
 
-func create(ctx *gin.Context) {
-	var customer res.Create
+func register(ctx *gin.Context) {
+	var customer res.Register
 
 	data := ctx.MustGet("data")
 	byte_data, _ := json.Marshal(data)

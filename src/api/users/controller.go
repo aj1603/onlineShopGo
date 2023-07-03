@@ -7,6 +7,6 @@ import (
 )
 
 func Controller(router *gin.RouterGroup) {
-	router.POST("/create", req.Validate_create, create)
+	router.POST("/register", req.Validate_create, register)
 	router.POST("/login", req.Validate_update, login)
 }

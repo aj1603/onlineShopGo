@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Create struct {
+type Register struct {
 	NAME      string `json:"name" validate:"required"`
 	PASSWORD  string `json:"password" validate:"required"`
 	EMAIL     string `json:"email" validate:"required"`
@@ -23,7 +23,7 @@ type Update struct {
 }
 
 func Validate_create(ctx *gin.Context) {
-	var schema Create
+	var schema Register
 	data, _ := ctx.GetRawData()
 
 	json.Unmarshal(data, &schema)
