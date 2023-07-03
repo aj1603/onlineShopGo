@@ -164,8 +164,12 @@ func search_from_word_(search_word string) ([]res.Product, error) {
 			products.quantity,
 			products.categories_id,
 			products.discounts_id,
-			products.brands_id
-		FROM products WHERE name LIKE ('`+search_word+`%')`,
+			products.brands_id,
+			products_images.id,
+			products_images.img_url,
+			products_images.products_id
+		FROM products LEFT JOIN products_images ON products.id = products_images.products_id
+		WHERE name LIKE ('`+search_word+`%') or description LIKE ('`+search_word+`%')`,
 	)
 
 	if err != nil {
@@ -176,6 +180,7 @@ func search_from_word_(search_word string) ([]res.Product, error) {
 
 	for rows.Next() {
 		var product res.Product
+		var products_images res.Product_images
 
 		err := rows.Scan(
 			&product.ID,
@@ -187,11 +192,15 @@ func search_from_word_(search_word string) ([]res.Product, error) {
 			&product.CATEGORY_ID,
 			&product.DISCOUNT_ID,
 			&product.BRAND_ID,
+			&products_images.ID,
+			&products_images.IMG_URL,
+			&products_images.PRODUCT_ID,
 		)
 
 		if err != nil {
 			return nil, err
 		}
+		product.PRODUCT_IMG = products_images
 		products = append(products, product)
 	}
 
