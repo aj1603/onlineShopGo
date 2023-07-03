@@ -18,7 +18,7 @@ type Tokens struct {
 	RefreshToken string `json:"refresh_token,omitempty"`
 }
 
-func create_(customer *res.Create) {
+func register_(customer *res.Register) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(customer.PASSWORD), bcrypt.DefaultCost)
 
 	if err != nil {

@@ -15,7 +15,7 @@ func register(ctx *gin.Context) {
 	byte_data, _ := json.Marshal(data)
 	json.Unmarshal(byte_data, &customer)
 
-	create_(&customer)
+	register_(&customer)
 
 	ctx.JSON(201, "Successfully created")
 }
