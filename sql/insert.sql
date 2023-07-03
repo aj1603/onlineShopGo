@@ -64,7 +64,7 @@ VALUES
 
 INSERT INTO products_images (img_url, products_id)
 VALUES
-    ('http://192.168.0.114:8091/public/products/2.jpg', 1),
-    ('http://192.168.0.114:8091/public/products/4.jpg', 2),
-    ('http://192.168.0.114:8091/public/products/3.jpg', 3),
-    ('http://192.168.0.114:8091/public/products/1.jpg', 4);
+    ('/public/products/2.jpg', 1),
+    ('/public/products/4.jpg', 2),
+    ('/public/products/3.jpg', 3),
+    ('/public/products/1.jpg', 4);
