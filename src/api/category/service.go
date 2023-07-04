@@ -51,3 +51,12 @@ func remove(ctx *gin.Context) {
 
 	ctx.JSON(200, "Successfully delete")
 }
+
+func get_by_category_id(ctx *gin.Context) {
+	id := ctx.Param("id")
+	int_id, _ := strconv.Atoi(id)
+
+	res := get_by_category_id_(int_id)
+
+	ctx.JSON(200, res)
+}

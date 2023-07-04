@@ -2,6 +2,7 @@ package category
 
 import (
 	"context"
+	"fmt"
 	db "onlineshopgo/database"
 	res "onlineshopgo/src/api/category/schemas"
 )
@@ -62,4 +63,35 @@ func remove_(id int) {
 		`DELETE FROM categories WHERE id = $1`,
 		id,
 	)
+}
+
+func get_by_category_id_(id int) res.Category {
+	var category res.Category
+
+	db.DB.QueryRow(
+		context.Background(),
+		`SELECT 
+			categories.id,
+			categories.name,
+			ARRAY(
+				SELECT JSON_BUILD_OBJECT(
+					'id', products.id,
+					'name', products.name,
+					'description', products.description,
+					'price', products.price::FLOAT,
+					'product_sku', products.product_sku,
+					'quantity', products.quantity,
+					'categories_id', products.categories_id,
+					'discounts_id', products.discounts_id,
+					'brands_id', products.brands_id
+				)
+				FROM products
+		 		WHERE products.categories_id = categories.id
+			) AS products
+		FROM categories WHERE id = $1
+		`,
+		id,
+	).Scan(&category.ID, &category.NAME, &category.PRODUCTS)
+	fmt.Println(category.PRODUCTS[1].ID)
+	return category
 }
