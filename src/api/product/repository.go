@@ -106,17 +106,22 @@ func get_by_id_(id int) res.Product {
 			products.product_sku,
 			products.quantity,
 			products.categories_id,
-			products.brands_id,
 			products.discounts_id,
-			products_images.id,
-			products_images.img_url,
-			products_images.products_id
-		FROM products LEFT JOIN products_images ON products.id = products_images.products_id
-		WHERE id = $1
+			products.brands_id,
+			ARRAY(
+				SELECT JSON_BUILD_OBJECT(
+					'id', products_images.id,
+		 			'img_url', products_images.img_url,
+		 			'products_id', products_images.products_id
+				)
+				FROM products_images
+		 		WHERE products_images.products_id = products.id
+			) AS products_images
+		FROM products WHERE id = $1
 		`,
 		id,
 	).Scan(&product.ID, &product.NAME, &product.DESCRIPTION, &product.PRICE, &product.PRODUCT_SKU,
-		&product.QUANTITY, &product.CATEGORY_ID, &product.DISCOUNT_ID, &product.BRAND_ID)
+		&product.QUANTITY, &product.CATEGORY_ID, &product.DISCOUNT_ID, &product.BRAND_ID, &product.PRODUCT_IMG)
 	return product
 }
 
