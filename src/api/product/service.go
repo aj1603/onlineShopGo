@@ -68,15 +68,6 @@ func get_by_id(ctx *gin.Context) {
 	ctx.JSON(200, res)
 }
 
-func get_by_category_id(ctx *gin.Context) {
-	id := ctx.Param("id")
-	int_id, _ := strconv.Atoi(id)
-
-	res, _ := get_by_category_id_(int_id)
-
-	ctx.JSON(200, res)
-}
-
 func search(ctx *gin.Context) {
 	var search req.Search
 	search.SEARCH = ctx.Param("search")

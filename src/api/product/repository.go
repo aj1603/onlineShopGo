@@ -125,50 +125,8 @@ func get_by_id_(id int) res.Product {
 	return product
 }
 
-func get_by_category_id_(categories_id int) ([]res.Product, error) {
-	var products []res.Product
-
-	rows, err := db.DB.Query(
-		context.Background(),
-		`SELECT id, name, description, price, product_sku, quantity, categories_id, 
-		discounts_id, brands_id
-		FROM products WHERE categories_id = $1`,
-		categories_id,
-	)
-
-	if err != nil {
-		return nil, err
-	}
-
-	defer rows.Close()
-
-	for rows.Next() {
-		var product res.Product
-
-		err := rows.Scan(
-			&product.ID,
-			&product.NAME,
-			&product.DESCRIPTION,
-			&product.PRICE,
-			&product.PRODUCT_SKU,
-			&product.QUANTITY,
-			&product.CATEGORY_ID,
-			&product.DISCOUNT_ID,
-			&product.BRAND_ID,
-		)
-
-		if err != nil {
-			return nil, err
-		}
-
-		products = append(products, product)
-	}
-	return products, nil
-}
-
 func search_from_word_(search_word string) ([]res.Product, error) {
 	var products []res.Product
-	fmt.Println(search_word)
 
 	rows, err := db.DB.Query(
 		context.Background(),
@@ -182,11 +140,16 @@ func search_from_word_(search_word string) ([]res.Product, error) {
 			products.categories_id,
 			products.discounts_id,
 			products.brands_id,
-			products_images.id,
-			products_images.img_url,
-			products_images.products_id
-		FROM products LEFT JOIN products_images ON products.id = products_images.products_id
-		WHERE name LIKE ('`+search_word+`%') or description LIKE ('`+search_word+`%')`,
+			ARRAY(
+				SELECT JSON_BUILD_OBJECT(
+					'id', products_images.id,
+		 			'img_url', products_images.img_url,
+		 			'products_id', products_images.products_id
+				)
+				FROM products_images
+		 		WHERE products_images.products_id = products.id
+			) AS products_images
+		FROM products WHERE name LIKE ('`+search_word+`%') or description LIKE ('`+search_word+`%')`,
 	)
 
 	if err != nil {
@@ -197,7 +160,6 @@ func search_from_word_(search_word string) ([]res.Product, error) {
 
 	for rows.Next() {
 		var product res.Product
-		var products_images res.Product_images
 
 		err := rows.Scan(
 			&product.ID,
@@ -209,15 +171,12 @@ func search_from_word_(search_word string) ([]res.Product, error) {
 			&product.CATEGORY_ID,
 			&product.DISCOUNT_ID,
 			&product.BRAND_ID,
-			&products_images.ID,
-			&products_images.IMG_URL,
-			&products_images.PRODUCT_ID,
+			&product.PRODUCT_IMG,
 		)
 
 		if err != nil {
 			return nil, err
 		}
-		// product.PRODUCT_IMG = products_images
 		products = append(products, product)
 	}
 
