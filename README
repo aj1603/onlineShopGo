@@ -62,3 +62,7 @@ GET localhost:8090/product/get-by-id/:id    //for single product data
 
 GET localhost:8090/product/get-by-category-id/:id    //for single category data
 ///
+
+
+select products.id, products.name, ARRAY(SELECT JSON_BUILD_OBJECT(id, i.id, img_url, i.img_url) 
+FROM products_images i WHERE i.products_id = products.id) AS products_images FROM products WHERE id = 1

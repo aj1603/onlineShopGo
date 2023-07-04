@@ -67,4 +67,5 @@ VALUES
     ('/public/products/2.jpg', 1),
     ('/public/products/4.jpg', 2),
     ('/public/products/3.jpg', 3),
+    ('/public/products/1.jpg', 3),
     ('/public/products/1.jpg', 4);

@@ -23,26 +23,31 @@ func get_(limit, offset int) ([]res.Product, error) {
 			products.categories_id,
 			products.brands_id,
 			products.discounts_id,
-			products_images.id,
-			products_images.img_url,
-			products_images.products_id
-		FROM products LEFT JOIN products_images ON products.id = products_images.products_id
+			ARRAY(
+				SELECT JSON_BUILD_OBJECT(
+					'id', products_images.id,
+					'img_url', products_images.img_url,
+					'products_id', products_images.products_id
+				)
+				FROM products_images
+				WHERE products_images.products_id = products.id
+			) AS products_images
+		FROM products
 		LIMIT $1
 		OFFSET $2
 		`, limit, offset,
 	)
 
 	if err != nil {
-		return nil, err
+		return products, err
 	}
 
 	defer rows.Close()
 
 	for rows.Next() {
 		var product res.Product
-		var products_images res.Product_images
 
-		err := rows.Scan(
+		rows.Scan(
 			&product.ID,
 			&product.NAME,
 			&product.DESCRIPTION,
@@ -52,18 +57,11 @@ func get_(limit, offset int) ([]res.Product, error) {
 			&product.CATEGORY_ID,
 			&product.DISCOUNT_ID,
 			&product.BRAND_ID,
-			&products_images.ID,
-			&products_images.IMG_URL,
-			&products_images.PRODUCT_ID,
+			&product.PRODUCT_IMG,
 		)
 
-		if err != nil {
-			return nil, err
-		}
-		product.PRODUCT_IMG = products_images
 		products = append(products, product)
 	}
-
 	return products, nil
 }
 
@@ -97,11 +95,25 @@ func remove_(id int) {
 
 func get_by_id_(id int) res.Product {
 	var product res.Product
+
 	db.DB.QueryRow(
 		context.Background(),
-		`SELECT id, name, description, price, product_sku, quantity, categories_id, discounts_id,
-		brands_id
-		FROM products WHERE id = $1`,
+		`SELECT 
+			products.id,
+			products.name,
+			products.description,
+			products.price::FLOAT,
+			products.product_sku,
+			products.quantity,
+			products.categories_id,
+			products.brands_id,
+			products.discounts_id,
+			products_images.id,
+			products_images.img_url,
+			products_images.products_id
+		FROM products LEFT JOIN products_images ON products.id = products_images.products_id
+		WHERE id = $1
+		`,
 		id,
 	).Scan(&product.ID, &product.NAME, &product.DESCRIPTION, &product.PRICE, &product.PRODUCT_SKU,
 		&product.QUANTITY, &product.CATEGORY_ID, &product.DISCOUNT_ID, &product.BRAND_ID)
@@ -200,7 +212,7 @@ func search_from_word_(search_word string) ([]res.Product, error) {
 		if err != nil {
 			return nil, err
 		}
-		product.PRODUCT_IMG = products_images
+		// product.PRODUCT_IMG = products_images
 		products = append(products, product)
 	}
 
