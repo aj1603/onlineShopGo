@@ -33,7 +33,19 @@ VALUES
     ('Arduino', 'Orginal made in italy', 378.0, '0321654', 150, 1, 1, 1),
     ('Arduino LCD display', 'LCD display', 99.0, '0321655', 20, 1, 1, 1),
     ('Lion battery charger', 'DC plug charger', 441.0, '0321656', 25, 1, 1, 1),
-    ('ESP-8266 WiFi module', 'WiFi module', 140.0, '0321657', 10, 1, 1, 1);
+    ('ESP-8266 WiFi module', 'WiFi module', 140.0, '0321657', 10, 1, 1, 1),
+    ('Pil', 'Orginal made in turkmenistan', 32.0, '0321658', 150, 2, 1, 1),
+    ('Orak', 'Orginal made in turkmenistan', 25.0, '0321659', 20, 2, 1, 1),
+    ('Relay modul', '12V relay modul', 23.0, '0321660', 25, 1, 1, 1),
+    ('Pulse sensor', 'Yurek urgusyny anyklayan sensor', 140.0, '0321661', 10, 1, 1, 1),
+    ('Sowgatlyk haryt', 'Sowgatlyk harytlar oran owadan', 125.0, '0321662', 150, 3, 1, 1),
+    ('Cageli suw', 'Cageli suw(Hytaydan gelen)', 451.0, '0321663', 20, 3, 1, 1),
+    ('Oliva sabyn', 'Arzan bahadan', 8.0, '0321664', 25, 4, 1, 1),
+    ('Ariel', '2in1 soda mashyn ucin', 105.0, '0321665', 10, 4, 1, 1),
+    ('Elidor', 'Shampun beti Uniliver', 56.0, '0321666', 150, 4, 1, 1),
+    ('Fa sabyny', '150gr aramy', 12.0, '0321667', 20, 4, 1, 1),
+    ('Dorgo stanok', '5in1 paketli', 7.0, '0321668', 25, 4, 1, 1),
+    ('Arko', 'Arko krem posle britva', 43.0, '0321669', 10, 4, 1, 1);
 
 INSERT INTO order_status ("status")
 VALUES
@@ -67,5 +79,20 @@ VALUES
     ('/public/products/2.jpg', 1),
     ('/public/products/4.jpg', 2),
     ('/public/products/3.jpg', 3),
-    ('/public/products/1.jpg', 3),
+    ('/public/products/5.jpg', 5),
+    ('/public/products/6.jpg', 6),
+    ('/public/products/7.jpg', 11),
+    ('/public/products/8.jpg', 11),
+    ('/public/products/9.jpg', 14),
+    ('/public/products/10.jpg', 14),
+    ('/public/products/11.jpg', 12),
+    ('/public/products/12.jpg', 11),
+    ('/public/products/13.jpg', 11),
+    ('/public/products/14.jpg', 13),
+    ('/public/products/15.jpg', 13),
+    ('/public/products/16.jpg', 13),
+    ('/public/products/17.jpg', 8),
+    ('/public/products/18.jpg', 16),
+    ('/public/products/19.jpg', 16),
+    ('/public/products/20.jpg', 7),
     ('/public/products/1.jpg', 4);

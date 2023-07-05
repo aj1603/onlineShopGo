@@ -2,7 +2,6 @@ package category
 
 import (
 	"context"
-	"fmt"
 	db "onlineshopgo/database"
 	res "onlineshopgo/src/api/category/schemas"
 )
@@ -70,28 +69,37 @@ func get_by_category_id_(id int) res.Category {
 
 	db.DB.QueryRow(
 		context.Background(),
-		`SELECT 
-			categories.id,
-			categories.name,
-			ARRAY(
-				SELECT JSON_BUILD_OBJECT(
-					'id', products.id,
-					'name', products.name,
-					'description', products.description,
-					'price', products.price::FLOAT,
-					'product_sku', products.product_sku,
-					'quantity', products.quantity,
-					'categories_id', products.categories_id,
-					'discounts_id', products.discounts_id,
-					'brands_id', products.brands_id
-				)
-				FROM products
-		 		WHERE products.categories_id = categories.id
-			) AS products
-		FROM categories WHERE id = $1
-		`,
+		`SELECT
+			c.id,
+			c.name,
+			array_agg(jsonb_build_object(
+				'id', p.id,
+				'name', p.name,
+				'description', p.description,
+				'price', p.price::float,
+				'product_sku', p.product_sku,
+				'quantity', p.quantity,
+				'categories_id', p.categories_id,
+				'discounts_id', p.discounts_id,
+				'brands_id', p.brands_id,
+				'images', pi.images
+			)) AS products
+		FROM categories c
+		LEFT JOIN products p ON p.categories_id = c.id
+		LEFT JOIN (
+			SELECT
+				products_id,
+				array_agg(jsonb_build_object(
+					'id', id,
+					'img_url', img_url,
+					'products_id', products_id
+				)) AS images
+			FROM products_images
+			GROUP BY products_id
+		) pi ON pi.products_id = p.id
+		WHERE c.id = $1
+		GROUP BY c.id, c.name`,
 		id,
 	).Scan(&category.ID, &category.NAME, &category.PRODUCTS)
-	fmt.Println(category.PRODUCTS[1].ID)
 	return category
 }
