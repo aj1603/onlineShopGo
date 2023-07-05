@@ -11,27 +11,31 @@ SECRET_KEY = same_magic_word
 
 Category api:
 ///
-GET localhost:8090/category/all    //for all category data
+GET server_ip:8091/category/all    //for all category data
 
-POST localhost:8090/category/create    //for create category
+GET server_ip:8091/category/get-by-category-ip/:id    //for all category and products data
+
+POST server_ip:8091/category/create    //for create category
 {
 	"name":"something"
 }
 
-PUT localhost:8090/category/update    //for update category
+PUT server_ip:8091/category/update    //for update category
 {
 	"id": 1,
 	"name":"something"
 }
 
-DELETE localhost:8090/category/remove/:id    //for delete category
+DELETE server_ip:8091/category/remove/:id    //for delete category
 ///
 
 Product api:
 ///
-GET localhost:8090/product/all    //for all product data
+GET server_ip:8091/product/all    //for all product data
 
-POST localhost:8090/product/create    //for create product
+GET server_ip:8091/product/get-by-id/:id    //for single product data
+
+POST server_ip:8091/product/create    //for create product
 {
     "name": "something",
     "description": "something",
@@ -43,7 +47,7 @@ POST localhost:8090/product/create    //for create product
     "discounts_id": 1
 }
 
-PUT localhost:8090/product/update    //for update product
+PUT server_ip:8091/product/update    //for update product
 {
 	"id": 1,
 	"name": "something",
@@ -56,13 +60,26 @@ PUT localhost:8090/product/update    //for update product
     "discounts_id": 1
 }
 
-DELETE localhost:8090/product/remove/:id    //for delete product
+DELETE server_ip:8091/product/remove/:id    //for delete product
 
-GET localhost:8090/product/get-by-id/:id    //for single product data
+GET server_ip:8091/product/search/:search   //for search product
 
-GET localhost:8090/product/get-by-category-id/:id    //for single category data
 ///
 
+Users api
 
-select products.id, products.name, ARRAY(SELECT JSON_BUILD_OBJECT(id, i.id, img_url, i.img_url) 
-FROM products_images i WHERE i.products_id = products.id) AS products_images FROM products WHERE id = 1
+///
+
+POST server_ip:8091/users/register    //for user register
+{
+  "name": "Mergen",
+  "password": "mergen",
+  "email": "mergen@gmail.com",
+  "phone_num": 64806469
+}
+
+POST server_ip:8091/users/login     //for user login
+{
+  "name": "Mergen",
+  "password": "mergen"
+}
