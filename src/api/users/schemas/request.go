@@ -24,8 +24,9 @@ type Update struct {
 }
 
 type Login struct {
-	NAME     string `json:"name" validate:"required"`
-	PASSWORD string `json:"password" validate:"required"`
+	NAME      string `json:"name" validate:"required"`
+	PASSWORD  string `json:"password" validate:"required"`
+	PHONE_NUM int    `json:"phone_num" validate:"required"`
 }
 
 func Validate_create(ctx *gin.Context) {
@@ -45,8 +46,24 @@ func Validate_create(ctx *gin.Context) {
 	ctx.Next()
 }
 
-func Validate_update(ctx *gin.Context) {
+func Validate_login(ctx *gin.Context) {
 	var schema Login
+	data, _ := ctx.GetRawData()
+
+	json.Unmarshal(data, &schema)
+	errors := tools.Validation_errors(&schema)
+
+	if errors != nil {
+		ctx.JSON(400, errors)
+		ctx.Abort()
+	}
+
+	ctx.Set("data", schema)
+	ctx.Next()
+}
+
+func Validate_update(ctx *gin.Context) {
+	var schema Update
 	data, _ := ctx.GetRawData()
 
 	json.Unmarshal(data, &schema)

@@ -8,5 +8,6 @@ import (
 
 func Controller(router *gin.RouterGroup) {
 	router.POST("/register", req.Validate_create, register)
-	router.POST("/login", req.Validate_update, login)
+	router.POST("/login", req.Validate_login, login)
+	router.POST("/update", req.Validate_update, update)
 }

@@ -44,7 +44,7 @@ func login_(customer *res.Update) (Tokens, map[string]any) {
 		email,
 		phone_num
 		FROM customers WHERE name =$1
-		`, customer.NAME,
+		`, customer.PHONE_NUM,
 	).
 		Scan(
 			&customer.ID,
@@ -129,4 +129,22 @@ func RefreshToken(tokenString string) (Tokens, map[string]any) {
 	}
 
 	return tokens, nil
+}
+
+func update_(customer *res.Update) {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(customer.PASSWORD), bcrypt.DefaultCost)
+
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	_, error := db.DB.Exec(
+		context.Background(),
+		`UPDATE customers SET name = $1, password = $3, email = $4, phone_num = $5 WHERE id = $2`,
+		customer.NAME, customer.ID, hashedPassword, customer.EMAIL, customer.PHONE_NUM,
+	)
+
+	if error != nil {
+		fmt.Println(err.Error())
+	}
 }

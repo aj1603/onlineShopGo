@@ -78,8 +78,20 @@ POST server_ip:8091/users/register    //for user register
   "phone_num": 64806469
 }
 
+POST server_ip:8091/users/update    //for user update data
+{
+  "id": 1,
+  "name": "Mergen",
+  "password": "mergen",
+  "email": "mergen@gmail.com",
+  "phone_num": 64806469
+}
+
 POST server_ip:8091/users/login     //for user login
 {
   "name": "Mergen",
-  "password": "mergen"
+  "password": "mergen",
+  "phone_num": 64806469
 }
+
+///
