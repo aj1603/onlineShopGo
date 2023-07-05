@@ -149,7 +149,8 @@ func search_from_word_(search_word string) ([]res.Product, error) {
 				FROM products_images
 		 		WHERE products_images.products_id = products.id
 			) AS products_images
-		FROM products WHERE name LIKE ('`+search_word+`%') or description LIKE ('`+search_word+`%')`,
+		FROM products WHERE name ~* ('^' || $1) or description ~* ('^' || $1)`,
+		search_word,
 	)
 
 	if err != nil {
