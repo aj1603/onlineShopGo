@@ -70,7 +70,7 @@ Users api
 
 ///
 
-POST server_ip:8091/users/register    //for user register
+POST server_ip:8091/user/register    //for user register
 {
   "name": "Mergen",
   "password": "mergen",
@@ -78,7 +78,7 @@ POST server_ip:8091/users/register    //for user register
   "phone_num": 64806469
 }
 
-POST server_ip:8091/users/update    //for user update data
+POST server_ip:8091/user/update    //for user update data
 {
   "id": 1,
   "name": "Mergen",
@@ -87,7 +87,7 @@ POST server_ip:8091/users/update    //for user update data
   "phone_num": 64806469
 }
 
-POST server_ip:8091/users/login     //for user login
+POST server_ip:8091/user/login     //for user login
 {
   "name": "Mergen",
   "password": "mergen",
