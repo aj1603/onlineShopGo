@@ -2,7 +2,6 @@ package brands
 
 import (
 	"context"
-	"fmt"
 	db "onlineshopgo/database"
 	res "onlineshopgo/src/api/brands/schemas"
 )
@@ -51,7 +50,6 @@ func create_(brand *res.Create) {
 }
 
 func update_(brand *res.Update) {
-	fmt.Println(brand.ID)
 	db.DB.Exec(
 		context.Background(),
 		`UPDATE brands SET name = $1, img_url = $2 WHERE id = $3`,

@@ -20,9 +20,8 @@ POST server_ip:8091/category/create    //for create category
 	"name":"something"
 }
 
-PUT server_ip:8091/category/update    //for update category
+PUT server_ip:8091/category/update/:id    //for update category
 {
-	"id": 1,
 	"name":"something"
 }
 
@@ -47,10 +46,9 @@ POST server_ip:8091/product/create    //for create product
     "discounts_id": 1
 }
 
-PUT server_ip:8091/product/update    //for update product
+PUT server_ip:8091/product/update/:id    //for update product
 {
-	"id": 1,
-	"name": "something",
+	  "name": "something",
     "description": "something",
     "price": 0.0,
     "product_sku": "something",
@@ -78,9 +76,8 @@ POST server_ip:8091/user/register    //for user register
   "phone_num": 64806469
 }
 
-POST server_ip:8091/user/update    //for user update data
+POST server_ip:8091/user/update/:id    //for user update data
 {
-  "id": 1,
   "name": "Mergen",
   "password": "mergen",
   "email": "mergen@gmail.com",

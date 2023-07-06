@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"onlineshopgo/src/tools"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -65,6 +66,10 @@ func Validate_login(ctx *gin.Context) {
 func Validate_update(ctx *gin.Context) {
 	var schema Update
 	data, _ := ctx.GetRawData()
+
+	id := ctx.Param("id")
+	int_id, _ := strconv.Atoi(id)
+	schema.ID = int_id
 
 	json.Unmarshal(data, &schema)
 	errors := tools.Validation_errors(&schema)

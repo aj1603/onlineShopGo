@@ -1,7 +1,7 @@
-package category
+package address
 
 import (
-	req "onlineshopgo/src/api/category/schemas"
+	req "onlineshopgo/src/api/address/schemas"
 
 	"github.com/gin-gonic/gin"
 )

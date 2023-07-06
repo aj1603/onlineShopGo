@@ -3,8 +3,10 @@ package src
 import (
 	"io"
 	"onlineshopgo/config"
+	"onlineshopgo/src/api/address"
 	"onlineshopgo/src/api/brands"
 	"onlineshopgo/src/api/category"
+	"onlineshopgo/src/api/order"
 	"onlineshopgo/src/api/product"
 	"onlineshopgo/src/api/users"
 	"onlineshopgo/src/tools"
@@ -40,9 +42,10 @@ func set_mode(mode string) {
 func set_routers(router *gin.Engine) {
 	create_router(router, "product", product.Controller)
 	create_router(router, "category", category.Controller)
-	// create_router(router, "order", order.Controller)
+	create_router(router, "order", order.Controller)
 	create_router(router, "brand", brands.Controller)
 	create_router(router, "user", users.Controller)
+	create_router(router, "address", address.Controller)
 }
 
 func create_router(

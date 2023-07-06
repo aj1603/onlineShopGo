@@ -1,12 +1,21 @@
 package schemas
 
+import (
+	"encoding/json"
+	"fmt"
+	"onlineshopgo/src/tools"
+
+	"github.com/gin-gonic/gin"
+)
+
 type Order struct {
-	ID                 int     `json:"id"`
-	TOTAL              float32 `json:"total"`
-	CUSTOMER_ID        int     `json:"customer_id"`
-	ADDRESSS_ID        int     `json:"addresss_id"`
-	ORDER_STATUS_ID    int     `json:"order_status_id"`
-	PAYMENT_METHODS_ID int     `json:"payment_methods_id"`
+	ID                 int           `json:"id"`
+	TOTAL              float32       `json:"total"`
+	CUSTOMER_ID        int           `json:"customer_id"`
+	ADDRESSS_ID        int           `json:"addresss_id"`
+	ORDER_STATUS_ID    int           `json:"order_status_id"`
+	PAYMENT_METHODS_ID int           `json:"payment_methods_id"`
+	ORDER_ITEMS        []Order_items `json:"order_items"`
 }
 
 type Order_items struct {
@@ -16,26 +25,19 @@ type Order_items struct {
 	ORDERS_ID   int `json:"orders_id"`
 }
 
-type Order_status struct {
-	ID     int    `json:"id"`
-	STATUS string `json:"status"`
-}
+func Validate_order(ctx *gin.Context) {
+	var schema Order
+	data, _ := ctx.GetRawData()
 
-type Payment_methods struct {
-	ID      int    `json:"id"`
-	METHODS string `json:"methods"`
-}
+	json.Unmarshal(data, &schema)
+	errors := tools.Validation_errors(&schema)
 
-type Payment_methods_trans struct {
-	ID                 int    `json:"id"`
-	METHODS            string `json:"method"`
-	LANGUAGES_ID       int    `json:"languages_id"`
-	PAYMENT_METHODS_ID int    `json:"payment_methods_id"`
-}
+	if errors != nil {
+		ctx.JSON(400, errors)
+		ctx.Abort()
+	}
 
-type Order_status_trans struct {
-	ID              int    `json:"id"`
-	STATUS          string `json:"status"`
-	LANGUAGES_ID    int    `json:"languages_id"`
-	ORDER_STATUS_ID int    `json:"order_status_id"`
+	fmt.Println("data", schema)
+	ctx.Set("data", schema)
+	ctx.Next()
 }

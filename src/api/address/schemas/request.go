@@ -9,12 +9,18 @@ import (
 )
 
 type Create struct {
-	NAME string `json:"name" validate:"required"`
+	REGION       string `json:"region" validate:"required"`
+	CITY         string `json:"city" validate:"required"`
+	ADDRESS_LINE string `json:"address_line" validate:"required"`
+	CUSTOMERS_ID int    `json:"customers_id" validate:"required,gt>0"`
 }
 
 type Update struct {
-	ID   int    `json:"id" validate:"required,gt=0"`
-	NAME string `json:"name" validate:"required"`
+	ID           int    `json:"id" validate:"required,gt=0"`
+	REGION       string `json:"region" validate:"required"`
+	CITY         string `json:"city" validate:"required"`
+	ADDRESS_LINE string `json:"address_line" validate:"required"`
+	CUSTOMERS_ID int    `json:"customers_id" validate:"required,gt=0"`
 }
 
 type Delete struct {
