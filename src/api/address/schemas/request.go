@@ -12,7 +12,7 @@ type Create struct {
 	REGION       string `json:"region" validate:"required"`
 	CITY         string `json:"city" validate:"required"`
 	ADDRESS_LINE string `json:"address_line" validate:"required"`
-	CUSTOMERS_ID int    `json:"customers_id" validate:"required,gt>0"`
+	CUSTOMERS_ID int    `json:"customers_id" validate:"required,gt=0"`
 }
 
 type Update struct {
@@ -24,7 +24,7 @@ type Update struct {
 }
 
 type Delete struct {
-	ID int `json:"id" validate:"required,gt=0"`
+	ID int `json:"id"`
 }
 
 func Validate_create(ctx *gin.Context) {
@@ -60,22 +60,5 @@ func Validate_update(ctx *gin.Context) {
 	}
 
 	ctx.Set("data", schema)
-	ctx.Next()
-}
-
-func Validate_delete(ctx *gin.Context) {
-	var schema Delete
-
-	id := ctx.Param("id")
-	int_id, _ := strconv.Atoi(id)
-	schema.ID = int_id
-
-	errors := tools.Validation_errors(&schema)
-
-	if errors != nil {
-		ctx.JSON(400, errors)
-		ctx.Abort()
-	}
-
 	ctx.Next()
 }

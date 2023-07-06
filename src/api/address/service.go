@@ -44,10 +44,13 @@ func update(ctx *gin.Context) {
 }
 
 func remove(ctx *gin.Context) {
+	var address req.Delete
+
 	id := ctx.Param("id")
 	int_id, _ := strconv.Atoi(id)
+	address.ID = int_id
 
-	remove_(int_id)
+	remove_(&address)
 
 	ctx.JSON(200, "Successfully delete")
 }

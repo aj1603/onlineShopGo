@@ -10,5 +10,5 @@ func Controller(router *gin.RouterGroup) {
 	router.GET("/all", get)
 	router.POST("/create", req.Validate_create, create)
 	router.PUT("/update/:id", req.Validate_update, update)
-	router.DELETE("/remove/:id", req.Validate_delete, remove)
+	router.DELETE("/remove/:id", remove)
 }

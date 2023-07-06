@@ -17,10 +17,6 @@ type Update struct {
 	NAME string `json:"name" validate:"required"`
 }
 
-type Delete struct {
-	ID int `json:"id" validate:"required,gt=0"`
-}
-
 func Validate_create(ctx *gin.Context) {
 	var schema Create
 	data, _ := ctx.GetRawData()
@@ -54,22 +50,5 @@ func Validate_update(ctx *gin.Context) {
 	}
 
 	ctx.Set("data", schema)
-	ctx.Next()
-}
-
-func Validate_delete(ctx *gin.Context) {
-	var schema Delete
-
-	id := ctx.Param("id")
-	int_id, _ := strconv.Atoi(id)
-	schema.ID = int_id
-
-	errors := tools.Validation_errors(&schema)
-
-	if errors != nil {
-		ctx.JSON(400, errors)
-		ctx.Abort()
-	}
-
 	ctx.Next()
 }

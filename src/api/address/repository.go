@@ -2,6 +2,7 @@ package address
 
 import (
 	"context"
+	"fmt"
 	db "onlineshopgo/database"
 	res "onlineshopgo/src/api/address/schemas"
 )
@@ -56,11 +57,12 @@ func update_(address *res.Update) {
 	)
 }
 
-func remove_(id int) {
+func remove_(address *res.Delete) {
+	fmt.Println(address.ID)
 	db.DB.Exec(
 		context.Background(),
-		`DELETE FROM categories WHERE id = $1`,
-		id,
+		`DELETE FROM addresss WHERE id = $1`,
+		address.ID,
 	)
 }
 
