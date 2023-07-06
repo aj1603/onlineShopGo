@@ -7,14 +7,16 @@ import (
 	res "onlineshopgo/src/api/address/schemas"
 )
 
-func get_() ([]res.Category, error) {
-	var categories []res.Category
+func get_(id int) ([]res.Address, error) {
+	var addresss []res.Address
 
 	rows, err := db.DB.Query(
 		context.Background(),
 		`
-		SELECT * FROM categories
+		SELECT * FROM addresss
+		WHERE customers_id = $1
 		`,
+		id,
 	)
 
 	if err != nil {
@@ -24,21 +26,24 @@ func get_() ([]res.Category, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var category res.Category
+		var address res.Address
 
 		err := rows.Scan(
-			&category.ID,
-			&category.NAME,
+			&address.ID,
+			&address.REGION,
+			&address.CITY,
+			&address.ADDRESS_LINE,
+			&address.CUSTOMERS_ID,
 		)
 
 		if err != nil {
 			return nil, err
 		}
 
-		categories = append(categories, category)
+		addresss = append(addresss, address)
 	}
 
-	return categories, nil
+	return addresss, nil
 }
 
 func create_(address *res.Create) {
@@ -64,44 +69,4 @@ func remove_(address *res.Delete) {
 		`DELETE FROM addresss WHERE id = $1`,
 		address.ID,
 	)
-}
-
-func get_by_category_id_(id int) res.Category {
-	var category res.Category
-
-	db.DB.QueryRow(
-		context.Background(),
-		`SELECT
-			c.id,
-			c.name,
-			array_agg(jsonb_build_object(
-				'id', p.id,
-				'name', p.name,
-				'description', p.description,
-				'price', p.price::float,
-				'product_sku', p.product_sku,
-				'quantity', p.quantity,
-				'categories_id', p.categories_id,
-				'discounts_id', p.discounts_id,
-				'brands_id', p.brands_id,
-				'images', pi.images
-			)) AS products
-		FROM categories c
-		LEFT JOIN products p ON p.categories_id = c.id
-		LEFT JOIN (
-			SELECT
-				products_id,
-				array_agg(jsonb_build_object(
-					'id', id,
-					'img_url', img_url,
-					'products_id', products_id
-				)) AS images
-			FROM products_images
-			GROUP BY products_id
-		) pi ON pi.products_id = p.id
-		WHERE c.id = $1
-		GROUP BY c.id, c.name`,
-		id,
-	).Scan(&category.ID, &category.NAME, &category.PRODUCTS)
-	return category
 }

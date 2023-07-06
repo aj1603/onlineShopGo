@@ -1,9 +1,11 @@
 package schemas
 
-type Category struct {
-	ID       int                `json:"id"`
-	NAME     string             `json:"name"`
-	PRODUCTS []Product_category `json:"product_category"`
+type Address struct {
+	ID           int    `json:"id" validate:"required,gt=0"`
+	REGION       string `json:"region" validate:"required"`
+	CITY         string `json:"city" validate:"required"`
+	ADDRESS_LINE string `json:"address_line" validate:"required"`
+	CUSTOMERS_ID int    `json:"customers_id" validate:"required,gt=0"`
 }
 
 type Product_category struct {
