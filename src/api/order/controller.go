@@ -9,6 +9,5 @@ import (
 func Controller(router *gin.RouterGroup) {
 	router.GET("/all", get)
 	router.POST("/order-create", res.Validate_order, create)
-	router.GET("/order/get-by-user-id/:id")
-
+	router.GET("/get-by-user-id/:id", get_order_user_id)
 }

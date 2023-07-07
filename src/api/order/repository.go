@@ -94,3 +94,59 @@ func create_(order *req.Order) error {
 
 	return nil
 }
+
+func get_order_user_id_(id int) ([]req.Order, error) {
+	var orders []req.Order
+
+	rows, err := db.DB.Query(
+		context.Background(),
+		`SELECT
+			o.id,
+			o.total,
+			o.customers_id,
+			o.addresss_id,
+			o.order_status_id,
+			o.payment_methods_id,
+			ARRAY(
+				SELECT JSON_BUILD_OBJECT(
+					'id', oi.id,
+					'quantity', oi.quantity,
+					'products_id', oi.products_id,
+					'orders_id', oi.orders_id
+				)
+				FROM order_items oi
+				WHERE oi.orders_id = o.id
+			) AS order_items
+		FROM orders o
+		WHERE o.customers_id = $1`,
+		id,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var order req.Order
+
+		err := rows.Scan(
+			&order.ID,
+			&order.TOTAL,
+			&order.CUSTOMER_ID,
+			&order.ADDRESSS_ID,
+			&order.ORDER_STATUS_ID,
+			&order.PAYMENT_METHODS_ID,
+			&order.ORDER_ITEMS,
+		)
+
+		if err != nil {
+			return nil, err
+		}
+
+		orders = append(orders, order)
+	}
+
+	return orders, nil
+}
