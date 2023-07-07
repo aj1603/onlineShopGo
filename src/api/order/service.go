@@ -18,3 +18,14 @@ func create(ctx *gin.Context) {
 
 	ctx.JSON(201, "Successfully created")
 }
+
+func get(ctx *gin.Context) {
+	results, err := get_()
+
+	if err != nil {
+		ctx.JSON(500, err.Error())
+		return
+	}
+
+	ctx.JSON(200, results)
+}

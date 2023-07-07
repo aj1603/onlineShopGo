@@ -92,3 +92,57 @@ POST server_ip:8091/user/login     //for user login
 }
 
 ///
+
+Address api
+
+///
+
+GET server_ip:8091/address/user-address/:id    //for single user's data
+
+POST server_ip:8091/address/create   //for create user's address
+{
+  "region": "Magistralny",
+  "city": "Ashgabat",
+  "address_line": "Gundogar koce",
+  "customers_id": 2
+}
+
+PUT server_ip:8091/address/update/:id    //for update address
+{
+  "region": "Magistralny",
+  "city": "Ashgabat",
+  "address_line": "Gundogar koce",
+  "customers_id": 2
+}
+
+DELETE server_ip:8091/address/remove/:id    //for delete address
+
+///
+
+Order api
+
+///
+
+GET server_ip:8091/order/all    //for all order data
+
+GET server_ip:8091/order/get-by-user-id/:id    //for single product data
+
+POST server_ip:8091/order/order-create    //for create product
+{
+  "total": 23557.00,
+  "customer_id": 1,
+  "addresss_id": 5,
+  "order_status_id": 1,
+  "payment_methods_id": 1,
+  "order_items": [
+    {
+      "quantity": 1,
+      "products_id": 5
+    },
+    {
+      "quantity": 10,
+      "products_id": 3
+    }
+    ...
+  ]
+}
