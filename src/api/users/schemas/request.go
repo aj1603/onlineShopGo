@@ -59,6 +59,7 @@ func Validate_login(ctx *gin.Context) {
 		ctx.Abort()
 	}
 
+	fmt.Println("data", schema)
 	ctx.Set("data", schema)
 	ctx.Next()
 }

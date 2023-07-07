@@ -8,5 +8,5 @@ import (
 
 func Controller(router *gin.RouterGroup) {
 	router.GET("/all")
-	router.POST("/order-create", res.Validate_order)
+	router.POST("/order-create", res.Validate_order, create)
 }

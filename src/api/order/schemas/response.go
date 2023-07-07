@@ -2,7 +2,6 @@ package schemas
 
 import (
 	"encoding/json"
-	"fmt"
 	"onlineshopgo/src/tools"
 
 	"github.com/gin-gonic/gin"
@@ -37,7 +36,6 @@ func Validate_order(ctx *gin.Context) {
 		ctx.Abort()
 	}
 
-	fmt.Println("data", schema)
 	ctx.Set("data", schema)
 	ctx.Next()
 }
