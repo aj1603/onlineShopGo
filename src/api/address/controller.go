@@ -7,7 +7,7 @@ import (
 )
 
 func Controller(router *gin.RouterGroup) {
-	router.GET("/user-address/:id", get)
+	router.GET("/user-address", get)
 	router.POST("/create", req.Validate_create, create)
 	router.PUT("/update/:id", req.Validate_update, update)
 	router.DELETE("/remove/:id", remove)

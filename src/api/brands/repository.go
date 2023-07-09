@@ -60,6 +60,11 @@ func update_(brand *res.Update) {
 func remove_(id int) {
 	db.DB.Exec(
 		context.Background(),
+		`DELETE FROM products WHERE brands_id = $1`,
+		id,
+	)
+	db.DB.Exec(
+		context.Background(),
 		`DELETE FROM brands WHERE id = $1`,
 		id,
 	)

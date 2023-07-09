@@ -1,14 +1,15 @@
 package helpers
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 )
 
-func CheckToken(c *gin.Context) (jwt.MapClaims, map[string]any) {
-	tokenString := c.Request.Header.Get("Authorization")
+func CheckToken(ctx *gin.Context) (jwt.MapClaims, map[string]any) {
+	tokenString := ctx.Request.Header.Get("Authorization")
 
 	if tokenString == "" {
 		return nil, gin.H{"error": "No authorization header provided"}
@@ -26,6 +27,7 @@ func CheckToken(c *gin.Context) (jwt.MapClaims, map[string]any) {
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		return []byte("secret-key"), nil
 	})
+	fmt.Println(token)
 
 	if err != nil {
 		if err == jwt.ErrSignatureInvalid {

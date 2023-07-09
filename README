@@ -62,6 +62,14 @@ DELETE server_ip:8091/product/remove/:id    //for delete product
 
 GET server_ip:8091/product/search/:search   //for search product
 
+
+POST server_ip:8091/product/favorite         //for favorite create
+{
+  "customers_id":2,
+  "products_id":3
+}
+
+GET server_ip:8091/product/user/favorite     //for search product
 ///
 
 Users api
@@ -97,7 +105,9 @@ Address api
 
 ///
 
-GET server_ip:8091/address/user-address/:id    //for single user's data
+GET server_ip:8091/address/user-address   //for single user's data
+
+token bilen ugratmaly
 
 POST server_ip:8091/address/create   //for create user's address
 {
@@ -125,7 +135,9 @@ Order api
 
 GET server_ip:8091/order/all    //for all order data
 
-GET server_ip:8091/order/get-by-user-id/:id    //for single user's all order
+GET server_ip:8091/order/get-by-user-id   //for single user's all order
+
+token bilen ugratmaly
 
 POST server_ip:8091/order/order-create    //for create product
 {
@@ -155,7 +167,9 @@ Cart api
 
 DELETE server_ip:8091/remove/:id    //for all order data
 
-GET server_ip:8091/cart/get-by-user-id/:id    //for single user's all order
+GET server_ip:8091/cart/get-by-user-id   //for single user's all order
+
+token bilen ugratmaly
 
 POST server_ip:8091/cart/cart-create    //for create product
 {

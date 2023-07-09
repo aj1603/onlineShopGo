@@ -43,7 +43,7 @@ func login_(customer *res.Update) (Tokens, map[string]any) {
 		password,
 		email,
 		phone_num
-		FROM customers WHERE name =$1
+		FROM customers WHERE phone_num =$1
 		`, customer.PHONE_NUM,
 	).
 		Scan(
@@ -55,6 +55,7 @@ func login_(customer *res.Update) (Tokens, map[string]any) {
 		)
 
 	tokenString, err := generateToken(customer.ID, customer.NAME, customer.EMAIL)
+	fmt.Println(customer.ID, customer.NAME, customer.EMAIL)
 	if err != nil {
 		return Tokens{}, gin.H{"error": "Error generating token"}
 	}
@@ -66,17 +67,17 @@ func generateToken(userID int, userName string, userEmail string) (Tokens, error
 	var tokens Tokens
 	var err error
 	accessToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"user_id":   userID,
-		"username":  userName,
-		"user_role": userEmail,
-		"exp":       time.Now().Add(time.Hour * 24 * 1).Unix(),
+		"user_id":    userID,
+		"username":   userName,
+		"user_email": userEmail,
+		"exp":        time.Now().Add(time.Hour * 24 * 1).Unix(),
 	})
 
 	refreshToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"user_id":   userID,
-		"username":  userName,
-		"user_role": userEmail,
-		"exp":       time.Now().Add(time.Hour * 24 * 30).Unix(),
+		"user_id":    userID,
+		"username":   userName,
+		"user_email": userEmail,
+		"exp":        time.Now().Add(time.Hour * 24 * 30).Unix(),
 	})
 
 	tokens.AccessToken, err = accessToken.SignedString([]byte("secret-key"))

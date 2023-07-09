@@ -35,6 +35,12 @@ type Delete struct {
 	ID int `json:"id" validate:"required,gt=0"`
 }
 
+type Favorite struct {
+	ID          int `json:"id"`
+	CUSTOMER_ID int `json:"customers_id"`
+	PRODUCT_ID  int `json:"products_id"`
+}
+
 type Search struct {
 	SEARCH string `json:"search" validate:"required"`
 }
@@ -89,5 +95,21 @@ func Validate_search(ctx *gin.Context) {
 		ctx.Abort()
 	}
 
+	ctx.Next()
+}
+
+func Validate_favorite(ctx *gin.Context) {
+	var schema Favorite
+	data, _ := ctx.GetRawData()
+
+	json.Unmarshal(data, &schema)
+	errors := tools.Validation_errors(&schema)
+
+	if errors != nil {
+		ctx.JSON(400, errors)
+		ctx.Abort()
+	}
+
+	ctx.Set("data", schema)
 	ctx.Next()
 }

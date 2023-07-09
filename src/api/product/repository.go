@@ -183,3 +183,68 @@ func search_from_word_(search_word string) ([]res.Product, error) {
 
 	return products, nil
 }
+
+func favorite_(product *res.Favorite) {
+	db.DB.Exec(
+		context.Background(),
+		`INSERT INTO favorities ("customers_id", "products_id") VALUES ($1,$2)`,
+		product.CUSTOMER_ID, product.PRODUCT_ID,
+	)
+}
+
+func get_user_favorite_(id float64) ([]res.Product, error) {
+	var products []res.Product
+
+	rows, err := db.DB.Query(
+		context.Background(),
+		`SELECT 
+			favorities.customers_id,
+			ARRAY(
+				SELECT JSON_BUILD_OBJECT(
+					'id', products.id,
+		 			'name', products.name,
+		 			'description', products.description,
+		 			'price', products.price,
+		 			'product_sku', products.product_sku,
+		 			'quantity', products.quantity,
+		 			'categories_id', products.categories_id,
+		 			'discounts_id', products.discounts_id,
+		 			'brands_id', products.brands_id,
+				)
+				FROM products
+		 		WHERE products.id = favorities.products_id
+			) AS products
+		FROM favorities WHERE customers_id = $1`,
+		id,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var product res.Product
+
+		err := rows.Scan(
+			&product.ID,
+			&product.NAME,
+			&product.DESCRIPTION,
+			&product.PRICE,
+			&product.PRODUCT_SKU,
+			&product.QUANTITY,
+			&product.CATEGORY_ID,
+			&product.DISCOUNT_ID,
+			&product.BRAND_ID,
+			&product.PRODUCT_IMG,
+		)
+
+		if err != nil {
+			return nil, err
+		}
+		products = append(products, product)
+	}
+
+	return products, nil
+}

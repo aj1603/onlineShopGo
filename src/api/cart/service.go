@@ -2,8 +2,11 @@ package cart
 
 import (
 	"encoding/json"
+	"fmt"
 	req "onlineshopgo/src/api/cart/schemas"
 	"strconv"
+
+	token "onlineshopgo/helpers"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,13 +24,16 @@ func create(ctx *gin.Context) {
 }
 
 func get_cart_user_id(ctx *gin.Context) {
-	id := ctx.Param("id")
-	int_id, _ := strconv.Atoi(id)
+	claims, err := token.CheckToken(ctx)
 
-	results, err := get_cart_user_id_(int_id)
+	id := claims["user_id"].(float64)
+
+	fmt.Println(id)
+
+	results, _ := get_cart_user_id_(id)
 
 	if err != nil {
-		ctx.JSON(500, err.Error())
+		ctx.JSON(500, "Token is not create")
 		return
 	}
 

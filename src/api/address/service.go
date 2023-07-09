@@ -2,6 +2,8 @@ package address
 
 import (
 	"encoding/json"
+	"fmt"
+	token "onlineshopgo/helpers"
 	req "onlineshopgo/src/api/address/schemas"
 	"strconv"
 
@@ -9,13 +11,16 @@ import (
 )
 
 func get(ctx *gin.Context) {
-	id := ctx.Param("id")
-	int_id, _ := strconv.Atoi(id)
+	claims, err := token.CheckToken(ctx)
 
-	results, err := get_(int_id)
+	id := claims["user_id"].(float64)
+
+	fmt.Println(id)
+
+	results, _ := get_(id)
 
 	if err != nil {
-		ctx.JSON(500, err.Error())
+		ctx.JSON(500, "Addres tapylmady")
 		return
 	}
 

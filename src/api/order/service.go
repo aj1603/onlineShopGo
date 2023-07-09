@@ -2,8 +2,9 @@ package order
 
 import (
 	"encoding/json"
+	"fmt"
+	token "onlineshopgo/helpers"
 	req "onlineshopgo/src/api/order/schemas"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -32,13 +33,16 @@ func get(ctx *gin.Context) {
 }
 
 func get_order_user_id(ctx *gin.Context) {
-	id := ctx.Param("id")
-	int_id, _ := strconv.Atoi(id)
+	claims, err := token.CheckToken(ctx)
 
-	results, err := get_order_user_id_(int_id)
+	id := claims["user_id"].(float64)
+
+	fmt.Println(id)
+
+	results, _ := get_order_user_id_(id)
 
 	if err != nil {
-		ctx.JSON(500, err.Error())
+		ctx.JSON(500, "Zakaz tapylamady")
 		return
 	}
 

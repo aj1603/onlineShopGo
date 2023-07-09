@@ -7,7 +7,7 @@ import (
 	res "onlineshopgo/src/api/address/schemas"
 )
 
-func get_(id int) ([]res.Address, error) {
+func get_(id float64) ([]res.Address, error) {
 	var addresss []res.Address
 
 	rows, err := db.DB.Query(

@@ -11,7 +11,6 @@ var cart_sku int = 3
 
 func create_(cart *req.Cart) error {
 	var cartID int
-	fmt.Println(cart)
 
 	_, err := db.DB.Exec(
 		context.Background(),
@@ -24,8 +23,6 @@ func create_(cart *req.Cart) error {
 		fmt.Println(err)
 		return err
 	}
-
-	fmt.Println("HI")
 
 	db.DB.QueryRow(
 		context.Background(),
@@ -47,11 +44,10 @@ func create_(cart *req.Cart) error {
 	}
 
 	cart_sku += 1
-	fmt.Println(cart_sku)
 	return nil
 }
 
-func get_cart_user_id_(id int) ([]req.Cart, error) {
+func get_cart_user_id_(id float64) ([]req.Cart, error) {
 	var carts []req.Cart
 
 	rows, err := db.DB.Query(
@@ -84,16 +80,12 @@ func get_cart_user_id_(id int) ([]req.Cart, error) {
 	for rows.Next() {
 		var cart req.Cart
 
-		err := rows.Scan(
+		rows.Scan(
 			&cart.ID,
 			&cart.CART_SKU,
 			&cart.CUSTOMER_ID,
 			&cart.CART_ITEMS,
 		)
-
-		if err != nil {
-			return nil, err
-		}
 
 		carts = append(carts, cart)
 	}

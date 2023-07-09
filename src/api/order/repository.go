@@ -95,7 +95,7 @@ func create_(order *req.Order) error {
 	return nil
 }
 
-func get_order_user_id_(id int) ([]req.Order, error) {
+func get_order_user_id_(id float64) ([]req.Order, error) {
 	var orders []req.Order
 
 	rows, err := db.DB.Query(

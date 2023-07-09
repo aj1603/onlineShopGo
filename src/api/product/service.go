@@ -3,6 +3,7 @@ package product
 import (
 	"encoding/json"
 	"fmt"
+	token "onlineshopgo/helpers"
 	req "onlineshopgo/src/api/product/schemas"
 	"strconv"
 
@@ -75,4 +76,33 @@ func search(ctx *gin.Context) {
 	res, _ := search_from_word_(search.SEARCH)
 
 	ctx.JSON(200, res)
+}
+
+func favorite(ctx *gin.Context) {
+	var product req.Favorite
+
+	data := ctx.MustGet("data")
+	byte_data, _ := json.Marshal(data)
+	json.Unmarshal(byte_data, &product)
+
+	favorite_(&product)
+
+	ctx.JSON(201, "Successfully created")
+}
+
+func get_user_favorite(ctx *gin.Context) {
+	claims, err := token.CheckToken(ctx)
+
+	id := claims["user_id"].(float64)
+
+	fmt.Println(id)
+
+	results, _ := get_user_favorite_(id)
+
+	if err != nil {
+		ctx.JSON(500, "Halanan haryt tapylamady")
+		return
+	}
+
+	ctx.JSON(200, results)
 }
