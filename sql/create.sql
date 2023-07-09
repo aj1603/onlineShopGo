@@ -50,7 +50,8 @@ CREATE TABLE addresstrans (
 
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
-    "name" VARCHAR
+    "name" VARCHAR,
+    img_url VARCHAR
 );
 
 CREATE TABLE discounts (
