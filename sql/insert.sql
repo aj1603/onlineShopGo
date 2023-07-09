@@ -8,11 +8,11 @@ VALUES
 
 INSERT INTO categories ("name", img_url)
 VALUES
-    ('Electronika we robot', 'http://192.168.0.103:8091/public/products/2.jpg'),
-    ('Hojalyk harytlary', 'http://192.168.0.103:8091/public/products/2.jpg'),
-    ('Bezeg harytlary', 'http://192.168.0.103:8091/public/products/2.jpg'),
-    ('Arassacylyk harytlary', 'http://192.168.0.103:8091/public/products/2.jpg'),
-    ('Azyk harytlary', 'http://192.168.0.103:8091/public/products/2.jpg');
+    ('Electronika we robot', 'http://192.168.0.103:8091/public/category/1.png'),
+    ('Hojalyk harytlary', 'http://192.168.0.103:8091/public/category/2.png'),
+    ('Bezeg harytlary', 'http://192.168.0.103:8091/public/category/3.png'),
+    ('Arassacylyk harytlary', 'http://192.168.0.103:8091/public/category/4.png'),
+    ('Azyk harytlary', 'http://192.168.0.103:8091/public/category/5.png');
 
 INSERT INTO discounts ("name", "description", discount_rate, start_time, end_time)
 VALUES
@@ -34,7 +34,7 @@ VALUES
     ('Arduino LCD display', 'LCD display', 99.0, '0321655', 20, 1, 1, 1),
     ('Lion battery charger', 'DC plug charger', 441.0, '0321656', 25, 1, 1, 1),
     ('ESP-8266 WiFi module', 'WiFi module', 140.0, '0321657', 10, 1, 1, 1),
-    ('Pil', 'Orginal made in turkmenistan', 32.0, '0321658', 150, 2, 1, 1),
+    ('Palta', 'Orginal made in turkmenistan', 32.0, '0321658', 150, 2, 1, 1),
     ('Orak', 'Orginal made in turkmenistan', 25.0, '0321659', 20, 2, 1, 1),
     ('Relay modul', '12V relay modul', 23.0, '0321660', 25, 1, 1, 1),
     ('Pulse sensor', 'Yurek urgusyny anyklayan sensor', 140.0, '0321661', 10, 1, 1, 1),

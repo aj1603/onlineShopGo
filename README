@@ -146,3 +146,32 @@ POST server_ip:8091/order/order-create    //for create product
     ...
   ]
 }
+
+///
+
+Cart api
+
+///
+
+DELETE server_ip:8091/remove/:id    //for all order data
+
+GET server_ip:8091/cart/get-by-user-id/:id    //for single user's all order
+
+POST server_ip:8091/cart/cart-create    //for create product
+{
+  "customers_id": 2,
+  "cart_items": [
+    {
+      "quantity": 1,
+      "products_id": 5
+    },
+    {
+      "quantity": 10,
+      "products_id": 3
+    },
+    {
+      "quantity": 25,
+      "products_id": 6
+    }
+  ]
+}

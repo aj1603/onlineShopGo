@@ -1,20 +1,38 @@
 package schemas
 
-type Product struct {
-	ID          int              `json:"id"`
-	NAME        string           `json:"name"`
-	DESCRIPTION string           `json:"description"`
-	PRICE       float32          `json:"price"`
-	PRODUCT_SKU string           `json:"product_sku"`
-	QUANTITY    int              `json:"quantity"`
-	CATEGORY_ID int              `json:"categories_id"`
-	DISCOUNT_ID int              `json:"discounts_id"`
-	BRAND_ID    int              `json:"brands_id"`
-	PRODUCT_IMG []Product_images `json:"products_images"`
+import (
+	"encoding/json"
+	"onlineshopgo/src/tools"
+
+	"github.com/gin-gonic/gin"
+)
+
+type Cart struct {
+	ID          int          `json:"id"`
+	CART_SKU    string       `json:"carts_sku"`
+	CUSTOMER_ID int          `json:"customers_id"`
+	CART_ITEMS  []Cart_items `json:"cart_items"`
 }
 
-type Product_images struct {
-	ID         int    `json:"id"`
-	IMG_URL    string `json:"img_url"`
-	PRODUCT_ID int    `json:"products_id"`
+type Cart_items struct {
+	ID         int `json:"id"`
+	QUANTITY   int `json:"quantity"`
+	PRODUCT_ID int `json:"products_id"`
+	CARD_ID    int `json:"carts_id"`
+}
+
+func Validate_cart(ctx *gin.Context) {
+	var schema Cart
+	data, _ := ctx.GetRawData()
+
+	json.Unmarshal(data, &schema)
+	errors := tools.Validation_errors(&schema)
+
+	if errors != nil {
+		ctx.JSON(400, errors)
+		ctx.Abort()
+	}
+
+	ctx.Set("data", schema)
+	ctx.Next()
 }

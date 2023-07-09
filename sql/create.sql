@@ -190,7 +190,7 @@ CREATE TABLE order_status_trans (
 
 CREATE TABLE carts (
     id SERIAL PRIMARY KEY,
-    carts_sku VARCHAR UNIQUE,
+    carts_sku INTEGER UNIQUE,
     customers_id INTEGER,
 
     CONSTRAINT customers_id
