@@ -36,9 +36,10 @@ type Delete struct {
 }
 
 type Favorite struct {
-	ID          int `json:"id"`
-	CUSTOMER_ID int `json:"customers_id"`
-	PRODUCT_ID  int `json:"products_id"`
+	ID          int       `json:"id"`
+	CUSTOMER_ID int       `json:"customers_id"`
+	PRODUCT_ID  int       `json:"products_id"`
+	PRODUCTS    []Product `json:"products"`
 }
 
 type Search struct {

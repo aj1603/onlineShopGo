@@ -47,8 +47,8 @@ func create_(cart *req.Cart) error {
 	return nil
 }
 
-func get_cart_user_id_(id float64) ([]req.Cart, error) {
-	var carts []req.Cart
+func get_cart_user_id_(id float64) ([]req.Cart_res, error) {
+	var carts []req.Cart_res
 
 	rows, err := db.DB.Query(
 		context.Background(),
@@ -56,18 +56,46 @@ func get_cart_user_id_(id float64) ([]req.Cart, error) {
 			c.id,
 			c.carts_sku,
 			c.customers_id,
-			ARRAY(
-				SELECT JSON_BUILD_OBJECT(
-					'id', ci.id,
-					'quantity', ci.quantity,
-					'products_id', ci.products_id,
-					'carts_id', ci.carts_id
-				)
+			(
+				SELECT
+					jsonb_agg(jsonb_build_object(
+						'id', ci.id,
+						'quantity', ci.quantity,
+						'products_id', ci.products_id,
+						'carts_id', ci.carts_id,
+						'products', (
+							SELECT
+								jsonb_agg(jsonb_build_object(
+									'id', p.id,
+									'name', p.name,
+									'description', p.description,
+									'price', p.price::float,
+									'product_sku', p.product_sku,
+									'quantity', p.quantity,
+									'categories_id', p.categories_id,
+									'discounts_id', p.discounts_id,
+									'brands_id', p.brands_id,
+									'products_images', (
+										SELECT
+											jsonb_agg(jsonb_build_object(
+												'id', pi.id,
+												'img_url', pi.img_url,
+												'products_id', pi.products_id
+											))
+										FROM products_images pi
+										WHERE pi.products_id = p.id
+									)
+								))
+							FROM products p
+							WHERE p.id = ci.products_id
+						)
+					))
 				FROM cart_item ci
 				WHERE ci.carts_id = c.id
 			) AS cart_item
 		FROM carts c
-		WHERE c.customers_id = $1`,
+		WHERE c.customers_id = $1
+		GROUP BY c.id`,
 		id,
 	)
 
@@ -78,7 +106,7 @@ func get_cart_user_id_(id float64) ([]req.Cart, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var cart req.Cart
+		var cart req.Cart_res
 
 		rows.Scan(
 			&cart.ID,

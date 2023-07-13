@@ -8,11 +8,11 @@ VALUES
 
 INSERT INTO categories ("name", img_url)
 VALUES
-    ('Electronika we robot', 'http://192.168.0.103:8091/public/category/1.png'),
-    ('Hojalyk harytlary', 'http://192.168.0.103:8091/public/category/2.png'),
-    ('Bezeg harytlary', 'http://192.168.0.103:8091/public/category/3.png'),
-    ('Arassacylyk harytlary', 'http://192.168.0.103:8091/public/category/4.png'),
-    ('Azyk harytlary', 'http://192.168.0.103:8091/public/category/5.png');
+    ('Electronika we robot', 'http://192.168.235.100:8091/public/category/1.png'),
+    ('Hojalyk harytlary', 'http://192.168.235.100:8091/public/category/2.png'),
+    ('Bezeg harytlary', 'http://192.168.235.100:8091/public/category/3.png'),
+    ('Arassacylyk harytlary', 'http://192.168.235.100:8091/public/category/4.png'),
+    ('Azyk harytlary', 'http://192.168.235.100:8091/public/category/5.png');
 
 INSERT INTO discounts ("name", "description", discount_rate, start_time, end_time)
 VALUES
@@ -74,24 +74,24 @@ VALUES
 
 INSERT INTO products_images (img_url, products_id)
 VALUES
-    ('http://192.168.0.103:8091/public/products/2.jpg', 1),
-    ('http://192.168.0.103:8091/public/products/4.jpg', 2),
-    ('http://192.168.0.103:8091/public/products/3.jpg', 3),
-    ('http://192.168.0.103:8091/public/products/5.jpg', 5),
-    ('http://192.168.0.103:8091/public/products/6.jpg', 6),
-    ('http://192.168.0.103:8091/public/products/7.jpg', 9),
-    ('http://192.168.0.103:8091/public/products/8.jpg', 9),
-    ('http://192.168.0.103:8091/public/products/9.jpg', 12),
-    ('http://192.168.0.103:8091/public/products/10.jpg', 12),
-    ('http://192.168.0.103:8091/public/products/11.jpg', 10),
-    ('http://192.168.0.103:8091/public/products/12.jpg', 9),
-    ('http://192.168.0.103:8091/public/products/13.jpg', 9),
-    ('http://192.168.0.103:8091/public/products/14.jpg', 11),
-    ('http://192.168.0.103:8091/public/products/15.jpg', 11),
-    ('http://192.168.0.103:8091/public/products/16.jpg', 11),
-    ('http://192.168.0.103:8091/public/products/17.jpg', 8),
-    ('http://192.168.0.103:8091/public/products/18.jpg', 13),
-    ('http://192.168.0.103:8091/public/products/19.jpg', 13),
-    ('http://192.168.0.103:8091/public/products/20.jpg', 7),
-    ('http://192.168.0.103:8091/public/products/20.jpg', 14),
-    ('http://192.168.0.103:8091/public/products/1.jpg', 4);
+    ('http://192.168.235.100:8091/public/products/2.jpg', 1),
+    ('http://192.168.235.100:8091/public/products/4.jpg', 2),
+    ('http://192.168.235.100:8091/public/products/3.jpg', 3),
+    ('http://192.168.235.100:8091/public/products/5.jpg', 5),
+    ('http://192.168.235.100:8091/public/products/6.jpg', 6),
+    ('http://192.168.235.100:8091/public/products/7.jpg', 9),
+    ('http://192.168.235.100:8091/public/products/8.jpg', 9),
+    ('http://192.168.235.100:8091/public/products/9.jpg', 12),
+    ('http://192.168.235.100:8091/public/products/10.jpg', 12),
+    ('http://192.168.235.100:8091/public/products/11.jpg', 10),
+    ('http://192.168.235.100:8091/public/products/12.jpg', 9),
+    ('http://192.168.235.100:8091/public/products/13.jpg', 9),
+    ('http://192.168.235.100:8091/public/products/14.jpg', 11),
+    ('http://192.168.235.100:8091/public/products/15.jpg', 11),
+    ('http://192.168.235.100:8091/public/products/16.jpg', 11),
+    ('http://192.168.235.100:8091/public/products/17.jpg', 8),
+    ('http://192.168.235.100:8091/public/products/18.jpg', 13),
+    ('http://192.168.235.100:8091/public/products/19.jpg', 13),
+    ('http://192.168.235.100:8091/public/products/20.jpg', 7),
+    ('http://192.168.235.100:8091/public/products/20.jpg', 14),
+    ('http://192.168.235.100:8091/public/products/1.jpg', 4);

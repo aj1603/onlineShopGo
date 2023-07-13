@@ -192,29 +192,42 @@ func favorite_(product *res.Favorite) {
 	)
 }
 
-func get_user_favorite_(id float64) ([]res.Product, error) {
-	var products []res.Product
+func get_user_favorite_(id float64) ([]res.Favorite, error) {
+	var favoriteis []res.Favorite
 
 	rows, err := db.DB.Query(
 		context.Background(),
 		`SELECT 
-			favorities.customers_id,
-			ARRAY(
-				SELECT JSON_BUILD_OBJECT(
-					'id', products.id,
-		 			'name', products.name,
-		 			'description', products.description,
-		 			'price', products.price,
-		 			'product_sku', products.product_sku,
-		 			'quantity', products.quantity,
-		 			'categories_id', products.categories_id,
-		 			'discounts_id', products.discounts_id,
-		 			'brands_id', products.brands_id,
-				)
-				FROM products
-		 		WHERE products.id = favorities.products_id
-			) AS products
-		FROM favorities WHERE customers_id = $1`,
+			f.id,
+			f.customers_id,
+			f.products_id,
+			array_agg(jsonb_build_object(
+				'id', p.id,
+				'name', p.name,
+				'description', p.description,
+				'price', p.price::float,
+				'product_sku', p.product_sku,
+				'quantity', p.quantity,
+				'categories_id', p.categories_id,
+				'discounts_id', p.discounts_id,
+				'brands_id', p.brands_id,
+				'products_images', pi.products_images
+			)) AS products
+		FROM favorities f
+		LEFT JOIN products p ON p.id = f.products_id
+		LEFT JOIN (
+			SELECT
+				products_id,
+				array_agg(jsonb_build_object(
+					'id', id,
+					'img_url', img_url,
+					'products_id', products_id
+				)) AS products_images
+			FROM products_images
+			GROUP BY products_id
+		) pi ON pi.products_id = p.id
+		WHERE f.customers_id = $1
+		GROUP BY f.id`,
 		id,
 	)
 
@@ -225,26 +238,20 @@ func get_user_favorite_(id float64) ([]res.Product, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var product res.Product
+		var favorite res.Favorite
 
 		err := rows.Scan(
-			&product.ID,
-			&product.NAME,
-			&product.DESCRIPTION,
-			&product.PRICE,
-			&product.PRODUCT_SKU,
-			&product.QUANTITY,
-			&product.CATEGORY_ID,
-			&product.DISCOUNT_ID,
-			&product.BRAND_ID,
-			&product.PRODUCT_IMG,
+			&favorite.ID,
+			&favorite.CUSTOMER_ID,
+			&favorite.PRODUCT_ID,
+			&favorite.PRODUCTS,
 		)
 
 		if err != nil {
 			return nil, err
 		}
-		products = append(products, product)
+		favoriteis = append(favoriteis, favorite)
 	}
 
-	return products, nil
+	return favoriteis, nil
 }
