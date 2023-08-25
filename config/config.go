@@ -12,6 +12,7 @@ type config struct {
 	GIN_MODE  string
 	DB_URI    string
 	QR_FOLDER string
+	DIR       string
 }
 
 var ENV config
@@ -23,4 +24,5 @@ func Init_config() {
 	ENV.GIN_MODE = os.Getenv("GIN_MODE")
 	ENV.DB_URI = os.Getenv("DB_URI")
 	ENV.QR_FOLDER = os.Getenv("QR_FOLDER")
+	ENV.DIR = os.Getenv("DIR")
 }

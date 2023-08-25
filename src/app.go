@@ -3,9 +3,11 @@ package src
 import (
 	"io"
 	"onlineshopgo/config"
+	"onlineshopgo/src/api/address"
 	"onlineshopgo/src/api/brands"
+	"onlineshopgo/src/api/cart"
 	"onlineshopgo/src/api/category"
-	"onlineshopgo/src/api/customer"
+	"onlineshopgo/src/api/order"
 	"onlineshopgo/src/api/product"
 	"onlineshopgo/src/api/users"
 	"onlineshopgo/src/tools"
@@ -19,6 +21,7 @@ func Init_app() *gin.Engine {
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.SetTrustedProxies(nil)
+	router.Static("/public", config.ENV.DIR)
 	router.Use(tools.Cors)
 	set_routers(router)
 	return router
@@ -40,11 +43,14 @@ func set_mode(mode string) {
 func set_routers(router *gin.Engine) {
 	create_router(router, "product", product.Controller)
 	create_router(router, "category", category.Controller)
+
 	create_router(router, "customer", customer.Controller)
 	create_router(router, "brands", brands.Controller)
 	create_router(router, "users", users.Controller)
 	// create_router(router, "users", users.Controller)
 	// create_router(router, "users", users.Controller)
+
+	
 }
 
 func create_router(

@@ -11,18 +11,181 @@ SECRET_KEY = same_magic_word
 
 Category api:
 ///
-GET localhost:8090/category/all    //for all category data
+GET server_ip:8091/category/all    //for all category data
 
-POST localhost:8090/category/create    //for create category
+GET server_ip:8091/category/get-by-category-ip/:id    //for all category and products data
+
+POST server_ip:8091/category/create    //for create category
 {
 	"name":"something"
 }
 
-PUT localhost:8090/category/update    //for update category
+PUT server_ip:8091/category/update/:id    //for update category
 {
-	"id": 1,
 	"name":"something"
 }
 
-DELETE localhost:8090/category/remove/:id    //for delete category
+DELETE server_ip:8091/category/remove/:id    //for delete category
 ///
+
+Product api:
+///
+GET server_ip:8091/product/all    //for all product data
+
+GET server_ip:8091/product/get-by-id/:id    //for single product data
+
+POST server_ip:8091/product/create    //for create product
+{
+    "name": "something",
+    "description": "something",
+    "price": 0.0,
+    "product_sku": "something",
+    "quantity": 0,
+    "categories_id": 1,
+    "brands_id": 1,
+    "discounts_id": 1
+}
+
+PUT server_ip:8091/product/update/:id    //for update product
+{
+	  "name": "something",
+    "description": "something",
+    "price": 0.0,
+    "product_sku": "something",
+    "quantity": 0,
+    "categories_id": 1,
+    "brands_id": 1,
+    "discounts_id": 1
+}
+
+DELETE server_ip:8091/product/remove/:id    //for delete product
+
+GET server_ip:8091/product/search/:search   //for search product
+
+
+POST server_ip:8091/product/favorite         //for favorite create
+{
+  "customers_id":2,
+  "products_id":3
+}
+
+GET server_ip:8091/product/user/favorite     //for search product
+///
+
+Users api
+
+///
+
+POST server_ip:8091/user/register    //for user register
+{
+  "name": "Mergen",
+  "password": "mergen",
+  "email": "mergen@gmail.com",
+  "phone_num": 64806469
+}
+
+POST server_ip:8091/user/update/:id    //for user update data
+{
+  "name": "Mergen",
+  "password": "mergen",
+  "email": "mergen@gmail.com",
+  "phone_num": 64806469
+}
+
+POST server_ip:8091/user/login     //for user login
+{
+  "name": "Mergen",
+  "password": "mergen",
+  "phone_num": 64806469
+}
+
+///
+
+Address api
+
+///
+
+GET server_ip:8091/address/user-address   //for single user's data
+
+token bilen ugratmaly
+
+POST server_ip:8091/address/create   //for create user's address
+{
+  "region": "Magistralny",
+  "city": "Ashgabat",
+  "address_line": "Gundogar koce",
+  "customers_id": 2
+}
+
+PUT server_ip:8091/address/update/:id    //for update address
+{
+  "region": "Magistralny",
+  "city": "Ashgabat",
+  "address_line": "Gundogar koce",
+  "customers_id": 2
+}
+
+DELETE server_ip:8091/address/remove/:id    //for delete address
+
+///
+
+Order api
+
+///
+
+GET server_ip:8091/order/all    //for all order data
+
+GET server_ip:8091/order/get-by-user-id   //for single user's all order
+
+token bilen ugratmaly
+
+POST server_ip:8091/order/order-create    //for create product
+{
+  "total": 23557.00,
+  "customer_id": 1,
+  "addresss_id": 5,
+  "order_status_id": 1,
+  "payment_methods_id": 1,
+  "order_items": [
+    {
+      "quantity": 1,
+      "products_id": 5
+    },
+    {
+      "quantity": 10,
+      "products_id": 3
+    }
+    ...
+  ]
+}
+
+///
+
+Cart api
+
+///
+
+DELETE server_ip:8091/remove/:id    //for all order data
+
+GET server_ip:8091/cart/get-by-user-id   //for single user's all order
+
+token bilen ugratmaly
+
+POST server_ip:8091/cart/cart-create    //for create product
+{
+  "customers_id": 2,
+  "cart_items": [
+    {
+      "quantity": 1,
+      "products_id": 5
+    },
+    {
+      "quantity": 10,
+      "products_id": 3
+    },
+    {
+      "quantity": 25,
+      "products_id": 6
+    }
+  ]
+}

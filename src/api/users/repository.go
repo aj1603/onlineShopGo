@@ -18,7 +18,7 @@ type Tokens struct {
 	RefreshToken string `json:"refresh_token,omitempty"`
 }
 
-func create_(customer *res.Create) {
+func register_(customer *res.Register) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(customer.PASSWORD), bcrypt.DefaultCost)
 
 	if err != nil {
@@ -43,8 +43,8 @@ func login_(customer *res.Update) (Tokens, map[string]any) {
 		password,
 		email,
 		phone_num
-		FROM customers WHERE name =$1
-		`, customer.NAME,
+		FROM customers WHERE phone_num =$1
+		`, customer.PHONE_NUM,
 	).
 		Scan(
 			&customer.ID,
@@ -55,6 +55,7 @@ func login_(customer *res.Update) (Tokens, map[string]any) {
 		)
 
 	tokenString, err := generateToken(customer.ID, customer.NAME, customer.EMAIL)
+	fmt.Println(customer.ID, customer.NAME, customer.EMAIL)
 	if err != nil {
 		return Tokens{}, gin.H{"error": "Error generating token"}
 	}
@@ -66,17 +67,17 @@ func generateToken(userID int, userName string, userEmail string) (Tokens, error
 	var tokens Tokens
 	var err error
 	accessToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"user_id":   userID,
-		"username":  userName,
-		"user_role": userEmail,
-		"exp":       time.Now().Add(time.Hour * 24 * 1).Unix(),
+		"user_id":    userID,
+		"username":   userName,
+		"user_email": userEmail,
+		"exp":        time.Now().Add(time.Hour * 24 * 1).Unix(),
 	})
 
 	refreshToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"user_id":   userID,
-		"username":  userName,
-		"user_role": userEmail,
-		"exp":       time.Now().Add(time.Hour * 24 * 30).Unix(),
+		"user_id":    userID,
+		"username":   userName,
+		"user_email": userEmail,
+		"exp":        time.Now().Add(time.Hour * 24 * 30).Unix(),
 	})
 
 	tokens.AccessToken, err = accessToken.SignedString([]byte("secret-key"))
@@ -129,4 +130,22 @@ func RefreshToken(tokenString string) (Tokens, map[string]any) {
 	}
 
 	return tokens, nil
+}
+
+func update_(customer *res.Update) {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(customer.PASSWORD), bcrypt.DefaultCost)
+
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	_, error := db.DB.Exec(
+		context.Background(),
+		`UPDATE customers SET name = $1, password = $3, email = $4, phone_num = $5 WHERE id = $2`,
+		customer.NAME, customer.ID, hashedPassword, customer.EMAIL, customer.PHONE_NUM,
+	)
+
+	if error != nil {
+		fmt.Println(err.Error())
+	}
 }

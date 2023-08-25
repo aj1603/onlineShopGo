@@ -1,4 +1,4 @@
-package category
+package discount
 
 import (
 	"context"
@@ -58,11 +58,6 @@ func update_(category *res.Update) {
 }
 
 func remove_(id int) {
-	db.DB.Exec(
-		context.Background(),
-		`DELETE FROM products WHERE categories_id = $1`,
-		id,
-	)
 	db.DB.Exec(
 		context.Background(),
 		`DELETE FROM categories WHERE id = $1`,

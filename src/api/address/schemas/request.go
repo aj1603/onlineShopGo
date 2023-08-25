@@ -3,23 +3,28 @@ package schemas
 import (
 	"encoding/json"
 	"onlineshopgo/src/tools"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
 type Create struct {
-	NAME      string `json:"name" validate:"required"`
-	PASSWORD  string `json:"password" validate:"required"`
-	EMAIL     string `json:"email" validate:"required"`
-	PHONE_NUM int    `json:"phone_num" validate:"required"`
+	REGION       string `json:"region" validate:"required"`
+	CITY         string `json:"city" validate:"required"`
+	ADDRESS_LINE string `json:"address_line" validate:"required"`
+	CUSTOMERS_ID int    `json:"customers_id" validate:"required,gt=0"`
 }
 
 type Update struct {
-	ID        int    `json:"id" validate:"required,gt=0"`
-	NAME      string `json:"name" validate:"required"`
-	PASSWORD  string `json:"password" validate:"required"`
-	EMAIL     string `json:"email" validate:"required"`
-	PHONE_NUM int    `json:"phone_num" validate:"required"`
+	ID           int    `json:"id" validate:"required,gt=0"`
+	REGION       string `json:"region" validate:"required"`
+	CITY         string `json:"city" validate:"required"`
+	ADDRESS_LINE string `json:"address_line" validate:"required"`
+	CUSTOMERS_ID int    `json:"customers_id" validate:"required,gt=0"`
+}
+
+type Delete struct {
+	ID int `json:"id"`
 }
 
 func Validate_create(ctx *gin.Context) {
@@ -41,6 +46,10 @@ func Validate_create(ctx *gin.Context) {
 func Validate_update(ctx *gin.Context) {
 	var schema Update
 	data, _ := ctx.GetRawData()
+
+	id := ctx.Param("id")
+	int_id, _ := strconv.Atoi(id)
+	schema.ID = int_id
 
 	json.Unmarshal(data, &schema)
 	errors := tools.Validation_errors(&schema)

@@ -50,7 +50,8 @@ CREATE TABLE addresstrans (
 
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
-    "name" VARCHAR
+    "name" VARCHAR,
+    img_url VARCHAR
 );
 
 CREATE TABLE discounts (
@@ -189,7 +190,7 @@ CREATE TABLE order_status_trans (
 
 CREATE TABLE carts (
     id SERIAL PRIMARY KEY,
-    carts_sku VARCHAR UNIQUE,
+    carts_sku INTEGER UNIQUE,
     customers_id INTEGER,
 
     CONSTRAINT customers_id

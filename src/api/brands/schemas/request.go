@@ -43,6 +43,10 @@ func Validate_update(ctx *gin.Context) {
 	var schema Update
 	data, _ := ctx.GetRawData()
 
+	id := ctx.Param("id")
+	int_id, _ := strconv.Atoi(id)
+	schema.ID = int_id
+
 	json.Unmarshal(data, &schema)
 	errors := tools.Validation_errors(&schema)
 
@@ -52,21 +56,5 @@ func Validate_update(ctx *gin.Context) {
 	}
 
 	ctx.Set("data", schema)
-	ctx.Next()
-}
-
-func Validate_delete(ctx *gin.Context) {
-	var schema Delete
-	id := ctx.Param("id")
-	int_id, _ := strconv.Atoi(id)
-	schema.ID = int_id
-
-	errors := tools.Validation_errors(&schema)
-
-	if errors != nil {
-		ctx.JSON(400, errors)
-		ctx.Abort()
-	}
-
 	ctx.Next()
 }

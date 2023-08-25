@@ -1,5 +1,20 @@
 package schemas
 
+type Cart_res struct {
+	ID          int              `json:"id"`
+	CART_SKU    string           `json:"carts_sku"`
+	CUSTOMER_ID int              `json:"customers_id"`
+	CART_ITEMS  []Cart_items_res `json:"cart_items"`
+}
+
+type Cart_items_res struct {
+	ID         int       `json:"id"`
+	QUANTITY   int       `json:"quantity"`
+	PRODUCT_ID int       `json:"products_id"`
+	CARD_ID    int       `json:"carts_id"`
+	PRODUCTS   []Product `json:"products"`
+}
+
 type Product struct {
 	ID          int              `json:"id"`
 	NAME        string           `json:"name"`

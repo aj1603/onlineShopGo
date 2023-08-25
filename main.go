@@ -16,5 +16,6 @@ func main() {
 	tools.Init_queries()
 	router := app.Init_app()
 	address := fmt.Sprintf("%v:%v", config.ENV.HOST, config.ENV.PORT)
+	fmt.Println(address)
 	router.Run(address)
 }
