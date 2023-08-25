@@ -43,6 +43,8 @@ func set_routers(router *gin.Engine) {
 	create_router(router, "customer", customer.Controller)
 	create_router(router, "brands", brands.Controller)
 	create_router(router, "users", users.Controller)
+	// create_router(router, "users", users.Controller)
+	// create_router(router, "users", users.Controller)
 }
 
 func create_router(
